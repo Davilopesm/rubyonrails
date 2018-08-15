@@ -1,0 +1,2 @@
+class Capsula < ApplicationRecord
+end
