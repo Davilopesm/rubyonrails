@@ -1,33 +1,33 @@
 class V1::TiposController < ApplicationController
+  before_action :set_tipo, only: [:show, :update, :destroy]
+  
+
   def index
-    @tipos = Tipo.all
-    render json: @tipos
+    render json: repo.all
   end
 
   def create
-    @tipo = Tipo.new(tipo_params)
-
-    @tipo.save
-    render json: @tipo
+    if ::UseCases::Tipo::CreateTipo.create_tipo(tipo_params)
+      render json: {message: 'User criado', dados: tipo_params}
+    else
+      head(:unprocessable_entity)
+    end
   end
 
   def show
-    @tipo = Tipo.find(params[:id])
-    render json: @tipo
+    render json: repo.find(params[:id])
   end
 
   def update
-    @tipo = Tipo.find(params[:id])
-    if @tipo.update_attributes(tipo_params)
-      render json: {message: 'Alterado com sucesso!', dados: @tipo}
+    if ::UseCases::Tipo::UpdateTipo.update_tipo(tipo_params)
+      render json: {message: 'Alterado com sucesso!', dados: tipo_params}
     else
       head(:unprocessable_entity)
-    end    
+    end
   end
 
   def destroy
-    @tipo = Tipo.find(params[:id])
-    if @tipo.destroy
+    if ::UseCases::Tipo::DeleteTipo.delete_tipo(tipo_params)
       render json: { message: 'Deletado com sucesso!'}
     else
       head(:unprocessable_entity)
@@ -37,9 +37,17 @@ class V1::TiposController < ApplicationController
   
 
   private
+    def set_tipo
+      @tipo = repo.find(params[:id])
+    end
+
     def tipo_params
       params.require(:name)
-      params.permit(:name)
+      params.permit(:id, :name)
     end
-  
+
+    def repo
+      @repo ||= TipoRepository.new
+    end
+
 end

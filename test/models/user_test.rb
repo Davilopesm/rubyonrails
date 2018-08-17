@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class V1::CapsulaControllerTest < ActionDispatch::IntegrationTest
+class UserTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
