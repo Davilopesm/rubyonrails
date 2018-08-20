@@ -14,8 +14,6 @@ module UseCases
           @repository = repository
         end
     end
-
-    
   end
 end
 

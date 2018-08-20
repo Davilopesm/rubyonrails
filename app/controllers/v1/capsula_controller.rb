@@ -1,7 +1,7 @@
 class V1::CapsulaController < ApplicationController
 
 	def show
-		render json: repo.find(params[:id])
+		render json: ::UseCases::Capsula::ShowCapsula.show_capsula(params[:id])
 	end
 
   def create
@@ -31,7 +31,7 @@ class V1::CapsulaController < ApplicationController
 
 	private
 		def capsula_params
-			params.require(:name)
+			params.require(:id)
 			params.require(:instrucoes_preparo)
 			params.require(:tempo_preparo)
 			params.permit(:id, :name, :instrucoes_preparo, :tempo_preparo, :tipo_id)

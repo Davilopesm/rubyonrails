@@ -3,7 +3,7 @@ class V1::TiposController < ApplicationController
   
 
   def index
-    render json: repo.all
+    render json: ::UseCases::Tipo::IndexTipo.index_tipo
   end
 
   def create
@@ -15,7 +15,7 @@ class V1::TiposController < ApplicationController
   end
 
   def show
-    render json: repo.find(params[:id])
+    render json: ::UseCases::Tipo::ShowTipo.show_tipo(tipo_params)
   end
 
   def update
@@ -42,7 +42,7 @@ class V1::TiposController < ApplicationController
     end
 
     def tipo_params
-      params.require(:name)
+      params.require(:id)
       params.permit(:id, :name)
     end
 
