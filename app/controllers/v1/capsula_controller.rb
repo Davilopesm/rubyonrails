@@ -31,7 +31,6 @@ class V1::CapsulaController < ApplicationController
 
 	private
 		def capsula_params
-			params.require(:id)
 			params.require(:instrucoes_preparo)
 			params.require(:tempo_preparo)
 			params.permit(:id, :name, :instrucoes_preparo, :tempo_preparo, :tipo_id)
